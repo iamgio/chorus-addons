@@ -18,8 +18,9 @@ function onInit() {
                 if(key != 'menu-settings') {
                     var itemSection = map.get(key);
                     var item = itemSection.get('ID');
+                    item = item ? item.split(",")[0] : item;
                     var itemName = item ? item.contains(':') ? item.split(':')[0] : item : 'BEDROCK'
-                    var meta = item ? item.contains(':') ? item.split(':')[1] : 0 : 0
+                    var meta = item ? item.contains(':') ? item.split(':')[1] : 0 : 0;
                     var x = itemSection.get('POSITION-X');
                     var y = itemSection.get('POSITION-Y');
                     items.push(
