@@ -1,0 +1,22 @@
+.buttons-box {
+    -fx-padding: 5 0 10 0;
+}
+
+.buttons-box .button {
+    -fx-background-color: transparent;
+    -fx-opacity: .9;
+}
+
+.buttons-box .button:hover {
+    -fx-background-color: transparent;
+    -fx-opacity: 1;
+}
+
+.buttons-box .button:pressed {
+    -fx-background-color: transparent;
+    -fx-opacity: .8;
+}
+
+.buttons-box .button .button-icon {
+    -fx-background-color: -fx-text-color;
+}
