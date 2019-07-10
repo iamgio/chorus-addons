@@ -1,4 +1,4 @@
-load('classpath:assets/js/lib.js'/*chorus_js_api*/);
+load(chorus_js_api);
 
 credits = 'Chorus';
 
