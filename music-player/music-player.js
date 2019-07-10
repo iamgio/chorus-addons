@@ -67,12 +67,6 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         if(player) player.stop();
         var file = files[index]
 
-        // Skip if file is directory
-        if(file.isDirectory) {
-            updatePlayer(nextIndex(index));
-            return;
-        }
-
         // Skip if file isn't valid
         try {
             player = new fx.media.MediaPlayer(new fx.media.Media(file.toURI().toString()));
