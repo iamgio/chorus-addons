@@ -1,6 +1,9 @@
 load(chorus_js_api);
 
 credits = 'Chorus';
+version = '1.0.0';
+description = 'A simple music player!';
+image = 'https://i.imgur.com/dzdCNoM.png'
 
 // SVG paths for buttons
 

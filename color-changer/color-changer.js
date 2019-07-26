@@ -1,6 +1,9 @@
 load(chorus_js_api);
 
 credits = 'Chorus';
+version = '1.0.0';
+description = 'This add-on allows changing color tone by moving the menu.'
+image = 'https://i.imgur.com/soWjcJ8.png'
 
 function onLoad() {
     translationMap = {
