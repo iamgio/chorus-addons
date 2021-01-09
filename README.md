@@ -10,7 +10,7 @@ Download the zip and extract the content in the `chorus/addons` folder.
 Alternatively, download the whole repository as an archive from the green _Code_ button and extract the desired add-on folder.
 
 # Uploading
-If you wrote an add-on and wanted to make it public, make sure you added the required information (see [here](https://github.com/iAmGio/chorus/wiki/Your-first-add-on)). If everything is set, create a pull request containing a folder named after your add-on, with the source files in it and, optionally, a README.txt file.  
+If you wrote an add-on and wanted to make it public, make sure you added the required information (see [here](https://github.com/iAmGio/chorus/wiki/Your-first-add-on)). If everything is set, create a pull request containing a folder named after your add-on, with the source files in it and, optionally, either a README.md or README.txt file.  
 The add-on will be reviewed and eventually published.
 
 # Add-ons
