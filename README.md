@@ -1,4 +1,4 @@
-# Chorus Addons
+# Chorus add-ons
 
 This repository contains the add-ons for [Chorus](https://github.com/iAmGio/chorus).
 
@@ -16,4 +16,5 @@ The add-on will be reviewed and eventually published.
 # Add-ons
 * **chest-commands**: ChestCommand support by loading GUIs from selection.
 * **color-changer**: Change global color tone and saturation by moving a menu.
+* **items-viewer**: A simple grid-based menu that displays all the available items.
 * **music-player**: A simple music player.
