@@ -2,7 +2,7 @@ load(chorus_js_api);
 
 credits = 'Chorus';
 version = '1.0.1';
-description = 'This add-on brings ChestCommand support to Chorus by automatically loading GUIs from configuration files.'
+description = 'This add-on brings ChestCommand support to Chorus by loading GUIs from selection.'
 image = 'https://i.imgur.com/U3wp1qq.png'
 
 function onInit() {
@@ -34,5 +34,5 @@ function onInit() {
             return items;
         }
     )
-    format.setActive();
+    format.setActive('ChestCommands');
 }
