@@ -14,7 +14,7 @@ If you wrote an add-on and wanted to make it public, make sure you added the req
 The add-on will be reviewed and eventually published.
 
 # Add-ons
-* **chest-commands**: ChestCommand support by loading GUIs from selection.
+* **chest-commands**: ChestCommand support: automatically load GUIs from configuration files.
 * **color-changer**: Change global color tone and saturation by moving a menu.
 * **items-viewer**: A simple grid-based menu that displays all the available items.
 * **music-player**: A simple music player.
