@@ -16,32 +16,32 @@ function onLoad() {
 }
 
 function onInit() {
-    var translation = translate('color_changer');
+    const translation = translate('color_changer');
 
-    var edit = getMenuBarButton('edit');
+    const edit = getMenuBarButton('edit');
     edit.addButton(translation, function () {
-        var menu = new Menu(translation, true);
+        const menu = new Menu(translation, true);
         menu.layoutX = 300;
         menu.layoutY = 300;
         menu.filters = [];
 
-        var slider = new fxcontrols.Slider(.05, 1, 1);
+        const slider = new fxcontrols.Slider(.05, 1, 1);
         menu.opacityProperty().bind(slider.valueProperty());
         menu.children.add(slider);
 
-        var root = chorus.root
+        const root = chorus.root
 
         root.effect = new fx.effect.ColorAdjust();
 
-        listen(menu.layoutXProperty(), function () {
+        listen(menu.layoutXProperty(), () => {
             root.effect.hue = menu.layoutX / root.width;
         })
 
-        listen(menu.layoutYProperty(), function () {
+        listen(menu.layoutYProperty(), () => {
             root.effect.saturation = menu.layoutY / root.height - .5
         })
 
-        menu.onClose = function () {
+        menu.onClose = () => {
             root.effect = null;
         }
 

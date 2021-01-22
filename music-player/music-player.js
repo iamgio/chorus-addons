@@ -7,10 +7,10 @@ image = 'https://i.imgur.com/dzdCNoM.png'
 
 // SVG paths for buttons
 
-var PLAY_SVG = 'M8,5.14V19.14L19,12.14L8,5.14Z';
-var PAUSE_SVG = 'M14,19H18V5H14M6,19H10V5H6V19Z';
-var NEXT_SVG = 'M16,18H18V6H16M6,18L14.5,12L6,6V18Z';
-var PREVIOUS_SVG = 'M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z'
+const PLAY_SVG = 'M8,5.14V19.14L19,12.14L8,5.14Z';
+const PAUSE_SVG = 'M14,19H18V5H14M6,19H10V5H6V19Z';
+const NEXT_SVG = 'M16,18H18V6H16M6,18L14.5,12L6,6V18Z';
+const PREVIOUS_SVG = 'M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z'
 
 function onLoad() {
     allowSettings(true);
@@ -19,29 +19,29 @@ function onLoad() {
     })
 }
 
-var menu; // Only one instance allowed
+let menu; // Only one instance allowed
 
 function onInit() {
     loadStylesheet('style.css')
 
     createMenuBarButton('Music', 'music')
         .addButton('Open player', function () {
-            var folder = new File(getConfig().get('music_folder'));
+            const folder = new File(getConfig().get('music_folder'));
             if(!folder.exists() || !folder.isDirectory() || (folder.isDirectory && folder.listFiles().length < 1)) return;
             if(!menu) {
                 menu = new Menu('Music player', true);
                 menu.prefWidth = 250;
                 menu.filters = []; // Menu can be closed by clicking the X only
-                var nameLabel = new Label(); // Label showing track name
+                const nameLabel = new Label(); // Label showing track name
                 nameLabel.style = '-fx-padding: 10';
-                var playPauseButton = new PlayerButton(PAUSE_SVG); // Play/pause button
-                var previousButton = new PlayerButton(PREVIOUS_SVG); // Previous track button
-                var nextButton = new PlayerButton(NEXT_SVG); // Next track button
-                var buttonsHbox = new HBox(8); // Horizontal box with 8px spacing
+                const playPauseButton = new PlayerButton(PAUSE_SVG); // Play/pause button
+                const previousButton = new PlayerButton(PREVIOUS_SVG); // Previous track button
+                const nextButton = new PlayerButton(NEXT_SVG); // Next track button
+                const buttonsHbox = new HBox(8); // Horizontal box with 8px spacing
                 buttonsHbox.children.addAll(previousButton, playPauseButton, nextButton);
                 buttonsHbox.alignment = Alignment.CENTER;
                 buttonsHbox.styleClass.add('buttons-box');
-                var player = new Player(folder, menu, nameLabel, playPauseButton, previousButton, nextButton); // Instantiating player
+                const player = new Player(folder, menu, nameLabel, playPauseButton, previousButton, nextButton); // Instantiating player
                 menu.children.addAll(player, nameLabel, buttonsHbox);
             }
             menu.layoutX = 200.0;
@@ -51,9 +51,9 @@ function onInit() {
 }
 
 function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextButton) {
-    var view = new fx.media.MediaView();
-    var files = folder.listFiles();
-    var player;
+    const view = new fx.media.MediaView();
+    const files = folder.listFiles();
+    let player;
 
     // Next track index
     function nextIndex(index) {
@@ -68,7 +68,7 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
     // Updates player for new track
     function updatePlayer(index) {
         if(player) player.stop();
-        var file = files[index]
+        const file = files[index]
 
         // Skip if file isn't valid
         try {
@@ -82,26 +82,26 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         nameLabel.text = file.name.substr(0, file.name.lastIndexOf("."));
 
         // New track if the current one ends
-        player.setOnEndOfMedia(function () {
+        player.setOnEndOfMedia(() => {
             updatePlayer(nextIndex(index));
         })
 
         // The player stops whenever the menu is closed
-        menu.onClose = function () {
+        menu.onClose = () => {
             player.stop();
         }
 
         // Update play/pause button appearance
-        player.onPlaying = function () {
+        player.onPlaying = () => {
             playPauseButton.graphic.style = '-fx-shape: "' + PAUSE_SVG + '"';
         }
-        player.onPaused = function () {
+        player.onPaused = () => {
             playPauseButton.graphic.style = '-fx-shape: "' + PLAY_SVG + '"';
         }
 
         // Play or pause
-        var Status = fx.media.MediaPlayer.Status;
-        playPauseButton.onAction = function (e) {
+        const Status = fx.media.MediaPlayer.Status;
+        playPauseButton.onAction = e => {
             if(player.status == Status.PAUSED
                 || player.status == Status.READY
                 || player.status == Status.STOPPED) {
@@ -112,7 +112,7 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         }
 
         // Go to previous track or restart current track
-        previousButton.onAction = function (e) {
+        previousButton.onAction = e => {
             if(player.currentTime.toSeconds() < 5) {
                 updatePlayer(previousIndex(index));
             } else {
@@ -121,7 +121,7 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         }
 
         // Go to next track
-        nextButton.onAction = function (e) {
+        nextButton.onAction = e => {
             updatePlayer(nextIndex(index));
         }
 
@@ -135,11 +135,11 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
 
 function PlayerButton(svg) {
     // Button with SVG graphic
-    var icon = new fx.layout.Region();
+    const icon = new fx.layout.Region();
     icon.styleClass.add('button-icon');
     icon.style = '-fx-shape: "' + svg + '"';
     icon.prefWidth = icon.prefHeight = 20;
-    var button = new Button();
+    const button = new Button();
     button.graphic = icon;
     return button;
 }

@@ -18,8 +18,8 @@ function onLoad() {
 function onDropMenuOpen(type, menu) {
     // Add the button to the 'show' sub-menu
     if (type == 'show') {
-        menu.addButton(translate('items'), function (area, x, y) {
-            var menu = generateMenu(getItems());
+        menu.addButton(translate('items'), (area, x, y) => {
+            const menu = generateMenu(getItems());
             menu.layoutX = x;
             menu.layoutY = y;
             menu.show();
@@ -30,13 +30,13 @@ function onDropMenuOpen(type, menu) {
 // These JavaFX properties help us indirectly access text fields and label content
 
 // Search query
-var queryTextProperty = new fxproperty.SimpleStringProperty();
+const queryTextProperty = new fxproperty.SimpleStringProperty();
 
 // Current item name
-var itemTextProperty = new fxproperty.SimpleStringProperty();
+const itemTextProperty = new fxproperty.SimpleStringProperty();
 
 function createTextField() {
-    var textField = new TextField();
+    const textField = new TextField();
     textField.promptText = 'e.g. Cobblestone';
     textField.style = '-fx-padding: 10;';
     queryTextProperty.bind(textField.textProperty());
@@ -44,18 +44,18 @@ function createTextField() {
 }
 
 function createItemNameLabel() {
-    var label = new Label();
+    const label = new Label();
     label.style = '-fx-padding: 10; -fx-font-weight: bold;'
     label.textProperty().bind(itemTextProperty);
     return label;
 }
 
 function generateMenu(items) {
-    var menu = new Menu(translate('items'), true);
+    const menu = new Menu(translate('items'), true);
     menu.alignment = Alignment.CENTER;
 
     // A FlowPane makes a linear row that wraps to new lines if needed
-    var flowPane = new fxlayout.FlowPane();
+    const flowPane = new fxlayout.FlowPane();
     flowPane.style = '-fx-padding: 5;';
 
     // Space between rows and columns
@@ -68,10 +68,10 @@ function generateMenu(items) {
 
     // Update items on query change
     listen(queryTextProperty, function () {
-        var query = queryTextProperty.get();
-        var filteredItems = [];
+        const query = queryTextProperty.get();
+        const filteredItems = [];
         for (var i = 0; i < items.length; i++) {
-            var item = items[i];
+            const item = items[i];
             // Apply query
             if (query.isEmpty() || item.name.replace('_', ' ').toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.push(item);
@@ -80,7 +80,7 @@ function generateMenu(items) {
         updateContent(flowPane, filteredItems);
     });
 
-    var scrollPane = new fxcontrols.ScrollPane(flowPane); // Wrap the FlowPane in a scroll pane
+    const scrollPane = new fxcontrols.ScrollPane(flowPane); // Wrap the FlowPane in a scroll pane
     scrollPane.hbarPolicy = fxcontrols.ScrollPane.ScrollBarPolicy.NEVER; // Disable horizontal scroll
     menu.children.addAll(createTextField(), createItemNameLabel(), scrollPane);
     return menu;
@@ -89,10 +89,10 @@ function generateMenu(items) {
 function updateContent(flowPane, items) {
     flowPane.children.clear();
     items.forEach(
-        function (item) {
+        item => {
             for (i = 0; i < item.icons.length; i++) {
-                var image = new ImageView(item.icons[i]);
-                var pane = new fxlayout.Pane(image);
+                const image = new ImageView(item.icons[i]);
+                const pane = new fxlayout.Pane(image);
                 pane.setOnMouseEntered(function (e) {
                     itemTextProperty.set(item.formalName); // Display current item name, capitelized and with spaces
                 })
