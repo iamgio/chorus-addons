@@ -27,7 +27,6 @@ function onInit() {
                     const x = itemSection.get('POSITION-X');
                     const y = itemSection.get('POSITION-Y');
 
-                    print(item + '  ' + x)
                     items.push(new GUIFormatItem(new GUIFormatPosition(x ? x - 1 : 0, y ? y - 1 : 0), itemName, meta));
                 }
             });
