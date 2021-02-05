@@ -19,8 +19,8 @@ function onInit() {
     const edit = getMenuBarButton('edit');
     edit.addButton(translation, function () {
         const menu = new Menu(translation, true);
-        menu.layoutX = 300;
-        menu.layoutY = 300;
+        menu.setLayoutX(300);
+        menu.setLayoutY(300);
         menu.filters = [];
 
         const slider = new fxcontrols.Slider(.05, 1, 1);
