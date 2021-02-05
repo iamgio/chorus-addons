@@ -1,7 +1,5 @@
-load(chorus_js_api);
-
 credits = 'Chorus';
-version = '1.0.0';
+version = '1.0.1';
 description = 'This add-on allows changing color tone by moving the menu.'
 image = 'https://i.imgur.com/soWjcJ8.png'
 
@@ -27,23 +25,23 @@ function onInit() {
 
         const slider = new fxcontrols.Slider(.05, 1, 1);
         menu.opacityProperty().bind(slider.valueProperty());
-        menu.children.add(slider);
+        menu.getChildren().add(slider);
 
         const root = chorus.root
 
-        root.effect = new fx.effect.ColorAdjust();
+        root.setEffect(new fx.effect.ColorAdjust());
 
         listen(menu.layoutXProperty(), () => {
-            root.effect.hue = menu.layoutX / root.width;
+            root.getEffect().setHue(menu.getLayoutX() / root.getWidth());
         })
 
         listen(menu.layoutYProperty(), () => {
-            root.effect.saturation = menu.layoutY / root.height - .5
+            root.getEffect().setSaturation(menu.getLayoutY() / root.getHeight() - .5);
         })
 
-        menu.onClose = () => {
-            root.effect = null;
-        }
+        menu.setOnClose(() => {
+            root.setEffect(null);
+        });
 
         menu.show();
     })

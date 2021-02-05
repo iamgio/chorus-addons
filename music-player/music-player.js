@@ -1,7 +1,5 @@
-load(chorus_js_api);
-
 credits = 'Chorus';
-version = '1.0.0';
+version = '1.0.1';
 description = 'A simple music player!';
 image = 'https://i.imgur.com/dzdCNoM.png'
 
@@ -30,22 +28,22 @@ function onInit() {
             if(!folder.exists() || !folder.isDirectory() || (folder.isDirectory && folder.listFiles().length < 1)) return;
             if(!menu) {
                 menu = new Menu('Music player', true);
-                menu.prefWidth = 250;
-                menu.filters = []; // Menu can be closed by clicking the X only
+                menu.setPrefWidth(250);
+                menu.setFilters([]); // Menu can be closed by clicking the X only
                 const nameLabel = new Label(); // Label showing track name
-                nameLabel.style = '-fx-padding: 10';
+                nameLabel.setStyle('-fx-padding: 10');
                 const playPauseButton = new PlayerButton(PAUSE_SVG); // Play/pause button
                 const previousButton = new PlayerButton(PREVIOUS_SVG); // Previous track button
                 const nextButton = new PlayerButton(NEXT_SVG); // Next track button
                 const buttonsHbox = new HBox(8); // Horizontal box with 8px spacing
-                buttonsHbox.children.addAll(previousButton, playPauseButton, nextButton);
-                buttonsHbox.alignment = Alignment.CENTER;
-                buttonsHbox.styleClass.add('buttons-box');
+                buttonsHbox.getChildren().addAll(previousButton, playPauseButton, nextButton);
+                buttonsHbox.setAlignment(Alignment.CENTER);
+                buttonsHbox.getStyleClass().add('buttons-box');
                 const player = new Player(folder, menu, nameLabel, playPauseButton, previousButton, nextButton); // Instantiating player
-                menu.children.addAll(player, nameLabel, buttonsHbox);
+                menu.getChildren().addAll(player, nameLabel, buttonsHbox);
             }
-            menu.layoutX = 200.0;
-            menu.layoutY = 200.0;
+            menu.setLayoutX(200.0);
+            menu.setLayoutY(200.0);
             menu.show();
         });
 }
@@ -79,7 +77,7 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         }
 
         // Update label with track name
-        nameLabel.text = file.name.substr(0, file.name.lastIndexOf("."));
+        nameLabel.setText(file.getName().substr(0, file.getName().lastIndexOf(".")));
 
         // New track if the current one ends
         player.setOnEndOfMedia(() => {
@@ -87,46 +85,46 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
         })
 
         // The player stops whenever the menu is closed
-        menu.onClose = () => {
+        menu.setOnClose(() => {
             player.stop();
-        }
+        });
 
         // Update play/pause button appearance
-        player.onPlaying = () => {
-            playPauseButton.graphic.style = '-fx-shape: "' + PAUSE_SVG + '"';
-        }
-        player.onPaused = () => {
-            playPauseButton.graphic.style = '-fx-shape: "' + PLAY_SVG + '"';
-        }
+        player.setOnPlaying(() => {
+            playPauseButton.getGraphic().setStyle('-fx-shape: "' + PAUSE_SVG + '"');
+        });
+        player.setOnPaused(() => {
+            playPauseButton.getGraphic().setStyle('-fx-shape: "' + PLAY_SVG + '"');
+        });
 
         // Play or pause
         const Status = fx.media.MediaPlayer.Status;
-        playPauseButton.onAction = e => {
-            if(player.status == Status.PAUSED
-                || player.status == Status.READY
-                || player.status == Status.STOPPED) {
+        playPauseButton.setOnAction(e => {
+            if(player.getStatus() == Status.PAUSED
+                || player.getStatus() == Status.READY
+                || player.getStatus() == Status.STOPPED) {
                 player.play();
             } else {
                 player.pause();
             }
-        }
+        });
 
         // Go to previous track or restart current track
-        previousButton.onAction = e => {
+        previousButton.setOnAction(e => {
             if(player.currentTime.toSeconds() < 5) {
                 updatePlayer(previousIndex(index));
             } else {
                 player.seek(player.startTime);
             }
-        }
+        });
 
         // Go to next track
-        nextButton.onAction = e => {
+        nextButton.setOnAction(e => {
             updatePlayer(nextIndex(index));
-        }
+        });
 
         player.play();
-        view.player = player;
+        view.setMediaPlayer(player);
     }
 
     updatePlayer(0);
@@ -136,10 +134,10 @@ function Player(folder, menu, nameLabel, playPauseButton, previousButton, nextBu
 function PlayerButton(svg) {
     // Button with SVG graphic
     const icon = new fx.layout.Region();
-    icon.styleClass.add('button-icon');
-    icon.style = '-fx-shape: "' + svg + '"';
-    icon.prefWidth = icon.prefHeight = 20;
+    icon.getStyleClass().add('button-icon');
+    icon.setStyle('-fx-shape: "' + svg + '"');
+    icon.setPrefWidth(icon.prefHeight = 20);
     const button = new Button();
-    button.graphic = icon;
+    button.setGraphic(icon);
     return button;
 }
