@@ -9,10 +9,12 @@ const drpcPackage = 'club.minnced.discord.rpc.';
 let presence;
 let lib;
 
+// Updates the status
 function update() {
     if(lib && presence) lib.Discord_UpdatePresence(presence);
 }
 
+// Changes presence details depending on 'Show file' setting value and current tab file
 function changePresenceDetails(tab) {
     if(!getConfig().getBoolean('show_file')) {
         presence.details = '';
@@ -28,10 +30,12 @@ function changePresenceDetails(tab) {
     }
 }
 
+// Changes presence start timestamp depending on 'Show elapsed time' setting value
 function changePresenceTimestamp() {
     presence.startTimestamp = getConfig().getBoolean('show_elapsed_time') ? java.lang.System.currentTimeMillis() : 0;
 }
 
+// Initializes rich presence
 function initRPC() {
     // Loading library file
     // Not using loadJar since it causes errors when working with DLL files as the library internally does
@@ -61,6 +65,7 @@ function initRPC() {
     setInterval(() => lib.Discord_RunCallbacks(), 2000);
 }
 
+// Initializes the translation schemes
 function initTranslations() {
     translationMap = {
         'editing': {
@@ -89,6 +94,7 @@ function initTranslations() {
     }
 }
 
+// Loads config.yml
 function initConfig() {
     // Creating the configuration
     createConfig({
@@ -106,7 +112,6 @@ function initConfig() {
 
     // Handling changes when the user modifies the 'Show elapsed time' setting
     addConfigListener('show_elapsed_time', () => {
-        const value = getConfig().getBoolean('show_elapsed_time');
         changePresenceTimestamp();
         update();
     });
